@@ -362,10 +362,10 @@ void bot_update_inputs(bot_t* bot, bool inputs[BOT_NUM_INPUTS], const piece_t* p
             inputs[BOT_INPUT_CCW] = 1;
         }
     } else if (piece->x < bot->dest_x) {
-        inputs[BOT_INPUT_RIGHT] = piece->x < bot->dest_x;
+        inputs[BOT_INPUT_RIGHT] = 1;
     } else if (piece->x > bot->dest_x) {
-        inputs[BOT_INPUT_LEFT] = piece->x > bot->dest_x;
+        inputs[BOT_INPUT_LEFT] = 1;
     } else if (piece->x == bot->dest_x) {
-        inputs[BOT_INPUT_DOWN] = piece->x == bot->dest_x;
+        inputs[BOT_INPUT_DOWN] = 1;
     }
 }
