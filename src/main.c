@@ -95,7 +95,7 @@ int32_t init(SDL_Window** window, uint32_t win_flags,
     if (SDL_SetRenderDrawColor(*renderer, REND_GRAY, REND_GRAY, REND_GRAY, 0xFF) < 0) {
         return ERROR_SDL_SET_RENDER_DRAW;
     };
-    *matrix = matrix_new(MATRIX_MIN_ROWS, MATRIX_MIN_COLS, MATRIX_HIDDEN_ROWS);
+    *matrix = matrix_new(MATRIX_ROWS, MATRIX_COLS, MATRIX_HIDDEN_ROWS);
     if (*matrix == NULL) {
         return ERROR_MATRIX;
     }

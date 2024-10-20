@@ -30,9 +30,9 @@
 
 #define NUM_PIECES 7
 
-#define MATRIX_MIN_ROWS      22
-#define MATRIX_MIN_COLS      10
-#define MATRIX_HIDDEN_ROWS    2
+#define MATRIX_ROWS        22
+#define MATRIX_COLS        10
+#define MATRIX_HIDDEN_ROWS 2
 
 enum {
     TYPE_NONE,
