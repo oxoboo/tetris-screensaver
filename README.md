@@ -6,7 +6,7 @@ An NES-style Tetris screensaver for Windows.
 ## SECURITY WARNING
 Any screensaver that is installed on your computer has administrator privileges! A malicious screensaver can steal your data and cause serious harm to your computer. You should download screensavers only from sources that you trust.
 
-## Installion
+## Installation
 1. Download the latest release.
 2. Move the file to `C:\Windows\System32`. You will need adminstrator privileges. Please read the SECURITY WARNING.
 3. Open the Screen Saver Settings dialog. On Windows 11, open Settings, then go to Personalization->Lock screen->Screen saver.
