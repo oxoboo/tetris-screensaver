@@ -38,7 +38,7 @@ bot_t bot_new(void) {
     };
 }
 
-/* Count empty cells that are under at least one filled cell. */ 
+/* Count empty cells that are under at least one filled cell. */
 uint32_t count_holes(const matrix_t* matrix) {
     uint32_t holes = 0;
     bool top_reached;
@@ -63,11 +63,14 @@ uint32_t count_holes(const matrix_t* matrix) {
 /*
  * Count empty cells that can only be filled with a line piece. Any gap that is exactly one cell
  * wide and at least three cells deep will have at least one of these cells.
- * 
- * NOTE: This function needs a matrix at least two columns wide. A matrix that is less than two
- * columns wide may cause the program to crash.
+ *
+ * This function needs a matrix at least two columns wide. This function will return 0 if the
+ * matrix is less than two columns wide.
  */
 uint32_t count_line_dep_cells(const matrix_t* matrix, bool ignore_rightmost_col) {
+    if (matrix->cols < 2) {
+        return 0;
+    }
     uint32_t cells = 0;
     size_t r;
     /* left-most column */
@@ -166,7 +169,7 @@ uint32_t count_in_col(const matrix_t* matrix, uint32_t col) {
             ++num;
         };
     }
-    
+
     return num;
 }
 
@@ -175,11 +178,11 @@ uint32_t count_in_col(const matrix_t* matrix, uint32_t col) {
  * + The piece can be placed without making more holes in the stack.
  * + The piece can be placed without creating more line dependencies.
  * + The piece can be placed without making the stack too high.
- * 
+ *
  * If there is no piece that satisfies these conditions, then return a random piece. This function
  * may test the tetriminoes in random order. Because this function calls rand(), srand() should be
  * called at least once before calling this function.
- * 
+ *
  * See documentation on bot_find_place.
  */
 piece_t* bot_next_piece(bot_t* bot, const matrix_t* matrix, int32_t* err_value) {
@@ -241,12 +244,12 @@ piece_t* bot_next_piece(bot_t* bot, const matrix_t* matrix, int32_t* err_value) 
  * 3. Leave the rightmost column as empty as possible unless there is at least one hole in the
  *    stack.
  * 4. Stack as flat as possible.
- * 
+ *
  * The point of the bot is to play humanely enough under certain conditions. This algorithm is
  * pretty simple. It cannot tuck in pieces under overhangs, nor can it do t-spins, or look at a
  * "next" queue. To prevent the bot from making inevitable mistakes, it should be given certain
  * pieces at certain times (cheat).
- * 
+ *
  * This function will allocate memory. Return 0 on success or a negative value on failure.
  */
 int32_t bot_find_place(bot_t* bot, const matrix_t* matrix, uint8_t piece_type) {
@@ -338,7 +341,7 @@ int32_t bot_find_place(bot_t* bot, const matrix_t* matrix, uint8_t piece_type) {
  * 1. Rotate the piece to the desired orientation.
  * 2. Move the piece to the desired columns.
  * 3. Move the piece down until it is placed on the stack.
- * 
+ *
  * Before calling this function, pass `bot` to bot_find_piece for every piece the game spawns,
  * or use bot_next_piece.
  */
