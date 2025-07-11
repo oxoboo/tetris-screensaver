@@ -105,7 +105,7 @@ int32_t init(SDL_Window** window, uint32_t win_flags,
     }
     srand(time(NULL));
     SDL_ShowCursor(SDL_DISABLE);
-    
+
     return 0;
 }
 
@@ -125,7 +125,7 @@ bool event_quit(uint32_t type, bool ignore_mouse_motion, bool debug_mode) {
             || type == SDL_MOUSEBUTTONDOWN
         );
     }
-    
+
     return quit;
 }
 
@@ -242,7 +242,7 @@ void reset_loop2(SDL_Renderer* renderer, graphics_t* graphics, const matrix_t* m
         graphics_curtain2(graphics, matrix);
         graphics_render(renderer, graphics);
     }
-    
+
     time_start = SDL_GetTicks64();
     time_end = time_start + TIME_RESET3;
     while (!(*quit) && time_end > SDL_GetTicks64()) {
@@ -282,64 +282,12 @@ int32_t main_loop(SDL_Renderer* renderer, graphics_t* graphics,
     while (!quit) {
         ticks = SDL_GetTicks64();
         while (SDL_PollEvent(&event) != 0) {
-            /* 
+            /*
              * SDL_MOUSEMOTION event happens when the application opens while the cursor is inside
              * window. To prevent the application from immediately closing, this event is ignored
              * on the first iteration of the main loop.
              */
             quit = quit || event_quit(event.type, ignore_mouse_motion, debug_mode);
-            /* TODO: allow the user to be able to play the game. */
-            // /* keyboard input events */
-            // if (event.type == SDL_KEYDOWN && !event.key.repeat) {
-            //     switch (event.key.keysym.sym) {
-            //         case SDLK_LEFT:
-            //             inputs[INPUT_LEFT] = 1;
-            //             inputs[INPUT_RIGHT] = 0;
-            //             time_next_das = ticks + TIME_DAS;
-            //             piece_move_left(*piece, matrix);
-            //             break;
-            //         case SDLK_RIGHT:
-            //             inputs[INPUT_RIGHT] = 1;
-            //             inputs[INPUT_LEFT] = 0;
-            //             time_next_das = ticks + TIME_DAS;
-            //             piece_move_right(*piece, matrix);
-            //             break;
-            //         case SDLK_DOWN:
-            //             inputs[INPUT_DOWN] = 1;
-            //             time_next_down = ticks + TIME_DROP;
-            //             check_place_piece = !piece_move_down(*piece, matrix);
-            //             break;
-            //         case SDLK_z:
-            //             piece_rotate_ccw(*piece, matrix);
-            //             break;
-            //         case SDLK_x:
-            //             piece_rotate_cw(*piece, matrix);
-            //             break;
-            //         case SDLK_END:
-            //             quit = true;
-            //             break;
-            //         default:
-            //             break;
-            //     }
-            // }
-
-            // if (event.type == SDL_KEYUP) {
-            //     switch (event.key.keysym.sym) {
-            //         case SDLK_LEFT:
-            //             inputs[INPUT_LEFT] = 0;
-            //             time_next_das = ticks + TIME_DAS;
-            //             break;
-            //         case SDLK_RIGHT:
-            //             inputs[INPUT_RIGHT] = 0;
-            //             time_next_das = ticks + TIME_DAS;
-            //             break;
-            //         case SDLK_DOWN:
-            //             inputs[INPUT_DOWN] = 0;
-            //             break;
-            //         default:
-            //             break;
-            //     }
-            // }
         }
         ignore_mouse_motion = false;
 
@@ -426,7 +374,6 @@ int32_t main_loop(SDL_Renderer* renderer, graphics_t* graphics,
                 reset_loop2(renderer, graphics, matrix, piece, &event, &quit, debug_mode);
             }
             bot_force_drop = 0;
-            // inputs[INPUT_DOWN] = 0;
             check_place_piece = 0;
             delay_bot_until = ticks + BOT_DELAY_AFTER_SPAWN;
         }
