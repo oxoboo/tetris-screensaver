@@ -25,9 +25,8 @@
 #ifndef ERRORVALUES_H
 #define ERRORVALUES_H
 
-/* All error values listed in the enumerator must have a negative value. */
 enum {
-    ERROR_SDL_INIT = -14,
+    ERROR_SDL_INIT = 1,
     ERROR_SDL_TEXTURE_FILTERING,
     ERROR_SDL_WINDOW,
     ERROR_SDL_RENDERER,

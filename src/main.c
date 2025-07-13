@@ -422,7 +422,7 @@ int32_t main(int32_t argc, char **argv) {
         graphics->pallete_value = rand_pallete_value();
         err_value = main_loop(renderer, graphics, matrix, &piece, debug);
     }
-    if (err_value < 0) {
+    if (err_value > 0) {
         printf("Error value: %d\n", err_value);
     }
 
