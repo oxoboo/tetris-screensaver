@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Oxoboo
+ * Copyright (c) 2024-2025 Oxoboo
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -200,7 +200,7 @@ piece_t* piece_new(const matrix_t* matrix, uint8_t type) {
             break;
         default:
             return NULL;
-            
+
     }
 
     piece_t* piece = malloc(sizeof(piece_t));
@@ -215,7 +215,7 @@ piece_t* piece_new(const matrix_t* matrix, uint8_t type) {
     piece->x = matrix->cols / 2 - piece->cols / 2;
     piece->y = matrix->hidden_rows - 1;
     piece->type = type;
-    
+
     return piece;
 }
 
