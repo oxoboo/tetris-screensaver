@@ -105,7 +105,6 @@ int32_t init(SDL_Window** window, uint32_t win_flags,
     }
     srand(time(NULL));
     SDL_ShowCursor(SDL_DISABLE);
-
     return 0;
 }
 
@@ -125,7 +124,6 @@ bool event_quit(uint32_t type, bool ignore_mouse_motion, bool debug_mode) {
             || type == SDL_MOUSEBUTTONDOWN
         );
     }
-
     return quit;
 }
 
@@ -384,7 +382,6 @@ int32_t main_loop(SDL_Renderer* renderer, graphics_t* graphics,
         graphics_piece(graphics, *piece, matrix);
         graphics_render(renderer, graphics);
     }
-
     return 0;
 }
 
@@ -437,6 +434,5 @@ int32_t main(int32_t argc, char **argv) {
     renderer = NULL;
     window = NULL;
     SDL_Quit();
-
     return err_value;
 }

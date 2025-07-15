@@ -56,7 +56,6 @@ uint32_t count_holes(const matrix_t* matrix) {
             }
         }
     }
-
     return holes;
 }
 
@@ -119,7 +118,6 @@ uint32_t count_line_dep_cells(const matrix_t* matrix, bool ignore_rightmost_col)
             }
         }
     }
-
     return cells;
 }
 
@@ -145,7 +143,6 @@ double stack_deviation(const matrix_t* matrix) {
     for (size_t i = 0; i < cols; ++i) {
         sum_squares += pow(fabs(heights[i] - mean), 2);
     }
-
     return sqrt(sum_squares / (cols - 1));
 }
 
@@ -157,7 +154,6 @@ uint32_t get_stack_height(const matrix_t* matrix) {
             }
         }
     }
-
     return 0;
 }
 
@@ -169,7 +165,6 @@ uint32_t count_in_col(const matrix_t* matrix, uint32_t col) {
             ++num;
         };
     }
-
     return num;
 }
 
@@ -231,7 +226,6 @@ piece_t* bot_next_piece(bot_t* bot, const matrix_t* matrix, int32_t* err_value) 
     if (piece == NULL) {
         *err_value = ERROR_PIECE;
     }
-
     return piece;
 }
 
@@ -331,7 +325,6 @@ int32_t bot_find_place(bot_t* bot, const matrix_t* matrix, uint8_t piece_type) {
     }
     matrix_free(tmp_matrix);
     piece_free(tmp_piece);
-
     return 0;
 }
 

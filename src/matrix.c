@@ -215,7 +215,6 @@ piece_t* piece_new(const matrix_t* matrix, uint8_t type) {
     piece->x = matrix->cols / 2 - piece->cols / 2;
     piece->y = matrix->hidden_rows - 1;
     piece->type = type;
-
     return piece;
 }
 
@@ -244,7 +243,6 @@ bool piece_collides(const piece_t* piece, const matrix_t* matrix) {
             }
         }
     }
-
     return false;
 }
 
@@ -255,7 +253,6 @@ bool piece_move_down(piece_t* piece, const matrix_t* matrix) {
     if (collides) {
         --piece->y;
     }
-
     return !collides;
 }
 
@@ -266,7 +263,6 @@ bool piece_move_left(piece_t* piece, const matrix_t* matrix) {
     if (collides) {
         ++piece->x;
     }
-
     return !collides;
 }
 
@@ -277,7 +273,6 @@ bool piece_move_right(piece_t* piece, const matrix_t* matrix) {
     if (collides) {
         --piece->x;
     }
-
     return !collides;
 }
 
@@ -298,7 +293,6 @@ bool piece_rotate_ccw(piece_t* piece, const matrix_t* matrix) {
             piece->orient_index = 0;
         }
     }
-
     return !collides;
 }
 
@@ -319,7 +313,6 @@ bool piece_rotate_cw(piece_t* piece, const matrix_t* matrix) {
         }
         --piece->orient_index;
     }
-
     return !collides;
 }
 
@@ -386,7 +379,6 @@ matrix_t* matrix_new(uint32_t rows, uint32_t cols, uint32_t hidden_rows) {
             matrix->table[r][c] = TYPE_NONE;
         }
     }
-
     return matrix;
 }
 
@@ -399,7 +391,6 @@ bool matrix_row_full(const matrix_t* matrix, const uint32_t row) {
             break;
         }
     }
-
     return is_row_full;
 }
 
@@ -427,7 +418,6 @@ bool matrix_copy_table(matrix_t* dest, const matrix_t* src) {
             dest->table[r][c] = src->table[r][c];
         }
     }
-
     return true;
 }
 
