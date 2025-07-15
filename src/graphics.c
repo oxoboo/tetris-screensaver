@@ -325,7 +325,7 @@ void graphics_piece(graphics_t* graphics, const piece_t* piece, const matrix_t* 
 
 /* Matrix clearing lines animation. */
 void graphics_anim_clear(graphics_t* graphics, const matrix_t* matrix,
-                          uint64_t time, uint64_t duration) {
+                         uint64_t time, uint64_t duration) {
     for (size_t r = matrix->hidden_rows; r < matrix->rows; ++r) {
         if (matrix_row_full(matrix, r)) {
             uint32_t each_side = (matrix->cols / 2)
@@ -359,7 +359,7 @@ void graphics_anim_clear(graphics_t* graphics, const matrix_t* matrix,
 
 /* "Falling" curtain animation. */
 void graphics_curtain1(graphics_t* graphics, const matrix_t* matrix,
-                          uint64_t time, uint64_t duration) {
+                       uint64_t time, uint64_t duration) {
     uint32_t rows = ((double)time / duration) * (matrix->rows - matrix->hidden_rows);
     for (size_t r = matrix->hidden_rows; r < matrix->hidden_rows + rows; ++r) {
         graphics_curtain(graphics, matrix, r);
@@ -375,7 +375,7 @@ void graphics_curtain2(graphics_t* graphics, const matrix_t* matrix) {
 
 /* "Rising" curtain animation. */
 void graphics_curtain3(graphics_t* graphics, const matrix_t* matrix,
-                          uint64_t time, uint64_t duration) {
+                       uint64_t time, uint64_t duration) {
     uint32_t rows = (matrix->rows - matrix->hidden_rows)
         - ((double)time / duration) * (matrix->rows - matrix->hidden_rows);
     for (size_t r = matrix->hidden_rows; r < rows + matrix->hidden_rows; ++r) {

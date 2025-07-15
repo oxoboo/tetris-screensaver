@@ -48,13 +48,10 @@ void        graphics_clear_gray(graphics_t* graphics, const matrix_t* matrix);
 void        graphics_clear(graphics_t* graphics, const matrix_t* matrix);
 void        graphics_matrix(graphics_t* graphics, const matrix_t* matrix);
 void        graphics_piece(graphics_t* graphics, const piece_t* piece, const matrix_t* matrix);
-void        graphics_anim_clear(graphics_t* graphics, const matrix_t* matrix,
-                                uint64_t time, uint64_t duration);
-void        graphics_curtain1(graphics_t* graphics, const matrix_t* matrix,
-                              uint64_t time, uint64_t duration);
+void        graphics_anim_clear(graphics_t* graphics, const matrix_t* matrix, uint64_t time, uint64_t duration);
+void        graphics_curtain1(graphics_t* graphics, const matrix_t* matrix, uint64_t time, uint64_t duration);
 void        graphics_curtain2(graphics_t* graphics, const matrix_t* matrix);
-void        graphics_curtain3(graphics_t* graphics, const matrix_t* matrix,
-                              uint64_t time, uint64_t duration);
+void        graphics_curtain3(graphics_t* graphics, const matrix_t* matrix, uint64_t time, uint64_t duration);
 void        graphics_render(SDL_Renderer* renderer, graphics_t* graphics);
 void        graphics_free(graphics_t* graphics);
 

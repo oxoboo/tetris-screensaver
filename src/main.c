@@ -398,13 +398,7 @@ int32_t main(int32_t argc, char **argv) {
     if (argc > 1) {
         if (strcmp(argv[1], "/s") == 0) {
             init_attempted = true;
-            err_value = init(
-                &window,
-                SDL_WINDOW_FULLSCREEN_DESKTOP,
-                &renderer,
-                &graphics,
-                &matrix
-            );
+            err_value = init(&window, SDL_WINDOW_FULLSCREEN_DESKTOP, &renderer, &graphics, &matrix);
         } else if (strcmp(argv[1], "/d") == 0) {
             init_attempted = true;
             debug = true;

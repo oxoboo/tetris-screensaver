@@ -415,12 +415,7 @@ bool matrix_row_full(const matrix_t* matrix, const uint32_t row) {
 }
 
 bool matrix_out_bounds(const matrix_t* matrix, int32_t row, int32_t col) {
-    return (
-        (row < 0)
-        || (col < 0)
-        || (row + 1 > (int64_t)matrix->rows)
-        || (col + 1 > (int64_t)matrix->cols)
-    );
+    return ((row < 0) || (col < 0) || (row + 1 > (int64_t)matrix->rows) || (col + 1 > (int64_t)matrix->cols));
 }
 
 /*
@@ -428,9 +423,7 @@ bool matrix_out_bounds(const matrix_t* matrix, int32_t row, int32_t col) {
  * match.
  */
 bool matrix_copy_table(matrix_t* dest, const matrix_t* src) {
-    if (dest->rows != src->rows
-        || dest->hidden_rows != src->hidden_rows
-        || dest->cols != src->cols) {
+    if (dest->rows != src->rows || dest->hidden_rows != src->hidden_rows || dest->cols != src->cols) {
         return false;
     }
     for (size_t r = 0; r < src->rows; ++r) {
