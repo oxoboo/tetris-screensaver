@@ -140,9 +140,12 @@ uint32_t rand_pallete_value() {
     return rand() % NUM_PALLETES;
 }
 
-/* Create a new graphics struct. Uses RGBA pixel format. */
+/* Create a new graphics struct. Uses RGBA pixel format. Return NULL on failure. */
 graphics_t* graphics_new(SDL_Renderer* renderer, const matrix_t* matrix) {
     graphics_t* graphics = malloc(sizeof(graphics_t));
+    if (!graphics) {
+        return NULL;
+    }
     graphics->texture = SDL_CreateTexture(
         renderer,
         PIXEL_FORMAT,
@@ -153,6 +156,10 @@ graphics_t* graphics_new(SDL_Renderer* renderer, const matrix_t* matrix) {
     SDL_SetTextureBlendMode(graphics->texture, SDL_BLENDMODE_BLEND);
     graphics->size = sizeof(uint8_t) * graphics_texture_size(matrix) * BYTES_PER_PIXEL;
     graphics->pixels = malloc(graphics->size);
+    if (!graphics->pixels) {
+        free(graphics);
+        return NULL;
+    }
     graphics->pallete_value = 0;
     return graphics;
 }

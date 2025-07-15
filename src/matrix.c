@@ -78,11 +78,26 @@ piece_t* piece_new(const matrix_t* matrix, uint8_t type) {
     for (size_t i = 0; i < orientations; ++i) {
         table[i] = malloc(rows * sizeof(uint8_t*));
         if (table[i] == NULL) {
+            for (size_t i2 = 0; i2 < i; ++i2) {
+                free(table[i2]);
+            }
+            free(table);
             return NULL;
         }
         for (size_t r = 0; r < rows; ++r) {
             table[i][r] = malloc(cols * sizeof(uint8_t));
             if (table[i][r] == NULL) {
+                for (size_t r2 = 0; r2 < r; ++r2) {
+                    free(table[i][r2]);
+                }
+                free(table[i]);
+                for (size_t i2 = 0; i2 < i; ++i2) {
+                    for (size_t r2 = 0; r2 < rows; ++r2) {
+                        free(table[i2][r2]);
+                    }
+                    free(table[i2]);
+                }
+                free(table);
                 return NULL;
             }
             for (size_t c = 0; c < cols; ++c) {
@@ -352,33 +367,38 @@ void piece_free(piece_t* piece) {
 
 /*
  * Create a new matrix. The matrix should be at least four columns wide for the game to work
- * properly.
+ * properly. Return NULL on failure.
  */
 matrix_t* matrix_new(uint32_t rows, uint32_t cols, uint32_t hidden_rows) {
+    if (rows < hidden_rows) {
+        return NULL;
+    }
     matrix_t* matrix = malloc(sizeof(matrix_t));
     if (matrix == NULL) {
         return NULL;
     }
-    if (rows < hidden_rows) {
-        return NULL;
-    }
-
-    matrix->rows = rows;
-    matrix->cols = cols;
-    matrix->hidden_rows = hidden_rows;
     matrix->table = malloc(rows * sizeof(uint8_t*));
     if (matrix->table == NULL) {
+        free(matrix);
         return NULL;
     }
     for (size_t r = 0; r < rows; ++r) {
         matrix->table[r] = malloc(cols * sizeof(uint8_t));
         if (matrix->table[r] == NULL) {
+            for (size_t r2 = 0; r2 < r; ++r2) {
+                free(matrix->table[r2]);
+            }
+            free(matrix->table);
+            free(matrix);
             return NULL;
         }
         for (size_t c = 0; c < cols; ++c) {
             matrix->table[r][c] = TYPE_NONE;
         }
     }
+    matrix->rows = rows;
+    matrix->cols = cols;
+    matrix->hidden_rows = hidden_rows;
     return matrix;
 }
 
