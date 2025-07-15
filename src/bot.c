@@ -244,7 +244,7 @@ piece_t* bot_next_piece(bot_t* bot, const matrix_t* matrix, int32_t* err_value) 
  * "next" queue. To prevent the bot from making inevitable mistakes, it should be given certain
  * pieces at certain times (cheat).
  *
- * This function will allocate memory. Return 0 on success or a negative value on failure.
+ * This function will allocate memory. Return 0 on success or a non-zero value on failure.
  */
 int32_t bot_find_place(bot_t* bot, const matrix_t* matrix, uint8_t piece_type) {
     matrix_t* tmp_matrix = matrix_new(matrix->rows, matrix->cols, matrix->hidden_rows);

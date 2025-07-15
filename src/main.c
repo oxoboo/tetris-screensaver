@@ -62,7 +62,7 @@ enum {
 };
 
 /*
- * Initiate the SDL library, set up the game, and call srand. Return 0 on success or a negative
+ * Initiate the SDL library, set up the game, and call srand. Return 0 on success or a non-zero
  * value on error.
  */
 int32_t init(SDL_Window** window, uint32_t win_flags,
