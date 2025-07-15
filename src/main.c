@@ -357,7 +357,7 @@ int32_t main_loop(SDL_Renderer* renderer, graphics_t* graphics,
             }
             piece_free(*piece);
             *piece = bot_next_piece(&bot, matrix, &err_value);
-            if (err_value < 0) {
+            if (err_value != 0) {
                 return err_value;
             }
             /* If spawned piece collides with stack, play game over animation and reset game. */
@@ -366,7 +366,7 @@ int32_t main_loop(SDL_Renderer* renderer, graphics_t* graphics,
                 matrix_clear(matrix);
                 piece_free(*piece);
                 *piece = bot_next_piece(&bot, matrix, &err_value);
-                if (err_value < 0) {
+                if (err_value != 0) {
                     return err_value;
                 }
                 reset_loop2(renderer, graphics, matrix, piece, &event, &quit, debug_mode);
@@ -419,7 +419,7 @@ int32_t main(int32_t argc, char **argv) {
         graphics->pallete_value = rand_pallete_value();
         err_value = main_loop(renderer, graphics, matrix, &piece, debug);
     }
-    if (err_value > 0) {
+    if (err_value != 0) {
         printf("Error value: %d\n", err_value);
     }
 
