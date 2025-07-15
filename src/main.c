@@ -78,7 +78,7 @@ int32_t init(SDL_Window** window, uint32_t win_flags,
         SCREEN_DEFAULT_HEIGHT,
         win_flags
     );
-    if (window == NULL) {
+    if (!window) {
         return ERROR_SDL_WINDOW;
     }
     *renderer = SDL_CreateRenderer(
@@ -86,7 +86,7 @@ int32_t init(SDL_Window** window, uint32_t win_flags,
         -1,
         SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
     );
-    if (*renderer == NULL) {
+    if (!(*renderer)) {
         return ERROR_SDL_RENDERER;
     }
     if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0")) {
@@ -96,11 +96,11 @@ int32_t init(SDL_Window** window, uint32_t win_flags,
         return ERROR_SDL_SET_RENDER_DRAW;
     };
     *matrix = matrix_new(MATRIX_ROWS, MATRIX_COLS, MATRIX_HIDDEN_ROWS);
-    if (*matrix == NULL) {
+    if (!(*matrix)) {
         return ERROR_MATRIX;
     }
     *graphics = graphics_new(*renderer, *matrix);
-    if (*graphics == NULL) {
+    if (!(*graphics)) {
         return ERROR_GRAPHICS;
     }
     srand(time(NULL));

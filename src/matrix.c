@@ -72,12 +72,12 @@ piece_t* piece_new(const matrix_t* matrix, uint8_t type) {
     }
 
     uint8_t*** table = malloc(orientations * sizeof(uint8_t**));
-    if (table == NULL) {
+    if (!table) {
         return NULL;
     }
     for (size_t i = 0; i < orientations; ++i) {
         table[i] = malloc(rows * sizeof(uint8_t*));
-        if (table[i] == NULL) {
+        if (!table[i]) {
             for (size_t i2 = 0; i2 < i; ++i2) {
                 free(table[i2]);
             }
@@ -86,7 +86,7 @@ piece_t* piece_new(const matrix_t* matrix, uint8_t type) {
         }
         for (size_t r = 0; r < rows; ++r) {
             table[i][r] = malloc(cols * sizeof(uint8_t));
-            if (table[i][r] == NULL) {
+            if (!table[i][r]) {
                 for (size_t r2 = 0; r2 < r; ++r2) {
                     free(table[i][r2]);
                 }
@@ -219,7 +219,7 @@ piece_t* piece_new(const matrix_t* matrix, uint8_t type) {
     }
 
     piece_t* piece = malloc(sizeof(piece_t));
-    if (piece == NULL) {
+    if (!piece) {
         return NULL;
     }
     piece->table = table;
@@ -346,12 +346,12 @@ void piece_place(const piece_t* piece, matrix_t* matrix) {
 }
 
 void piece_free(piece_t* piece) {
-    if (piece == NULL) {
+    if (!piece) {
         return;
     }
     for (size_t i = 0; i < piece->orientations; ++i) {
         for (size_t r = 0; r < piece->rows; ++r) {
-            if (piece->table[i][r] != NULL) {
+            if (piece->table[i][r]) {
                 free(piece->table[i][r]);
             }
         }
@@ -374,17 +374,17 @@ matrix_t* matrix_new(uint32_t rows, uint32_t cols, uint32_t hidden_rows) {
         return NULL;
     }
     matrix_t* matrix = malloc(sizeof(matrix_t));
-    if (matrix == NULL) {
+    if (!matrix) {
         return NULL;
     }
     matrix->table = malloc(rows * sizeof(uint8_t*));
-    if (matrix->table == NULL) {
+    if (!matrix->table) {
         free(matrix);
         return NULL;
     }
     for (size_t r = 0; r < rows; ++r) {
         matrix->table[r] = malloc(cols * sizeof(uint8_t));
-        if (matrix->table[r] == NULL) {
+        if (!matrix->table[r]) {
             for (size_t r2 = 0; r2 < r; ++r2) {
                 free(matrix->table[r2]);
             }
@@ -475,16 +475,15 @@ void matrix_clean(matrix_t* matrix) {
 }
 
 void matrix_free(matrix_t* matrix) {
-    if (matrix == NULL) {
+    if (!matrix) {
         return;
     }
     for (size_t r = 0; r < matrix->rows; ++r) {
-        if (matrix->table[r] != NULL) {
+        if (matrix->table[r]) {
             free(matrix->table[r]);
         }
-
     }
-    if (matrix->table != NULL) {
+    if (matrix->table) {
         free(matrix->table);
     }
     free(matrix);

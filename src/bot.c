@@ -223,7 +223,7 @@ piece_t* bot_next_piece(bot_t* bot, const matrix_t* matrix, int32_t* err_value) 
     }
 
     piece_t* piece = piece_new(matrix, type);
-    if (piece == NULL) {
+    if (!piece) {
         *err_value = ERROR_PIECE;
     }
     return piece;
@@ -248,11 +248,11 @@ piece_t* bot_next_piece(bot_t* bot, const matrix_t* matrix, int32_t* err_value) 
  */
 int32_t bot_find_place(bot_t* bot, const matrix_t* matrix, uint8_t piece_type) {
     matrix_t* tmp_matrix = matrix_new(matrix->rows, matrix->cols, matrix->hidden_rows);
-    if (tmp_matrix == NULL) {
+    if (!tmp_matrix) {
         return ERROR_MATRIX;
     }
     piece_t* tmp_piece = piece_new(tmp_matrix, piece_type);
-    if (tmp_piece == NULL) {
+    if (!tmp_piece) {
         return ERROR_PIECE;
     }
     if (!matrix_copy_table(tmp_matrix, matrix)) {

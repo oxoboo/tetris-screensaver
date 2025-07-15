@@ -450,13 +450,13 @@ void graphics_render_stretch(SDL_Renderer* renderer, graphics_t* graphics) {
 }
 
 void graphics_free(graphics_t* graphics) {
-    if (graphics == NULL) {
+    if (!graphics) {
         return;
     }
-    if (graphics->texture != NULL) {
+    if (graphics->texture) {
         SDL_DestroyTexture(graphics->texture);
     }
-    if (graphics->pixels != NULL) {
+    if (graphics->pixels) {
         free(graphics->pixels);
     }
     free(graphics);
