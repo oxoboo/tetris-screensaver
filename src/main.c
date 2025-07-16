@@ -260,7 +260,6 @@ int32_t main_loop(SDL_Renderer* renderer, graphics_t* graphics,
                   matrix_t* matrix, piece_t** piece, bool debug_mode) {
     bot_t bot = bot_new();
     SDL_Event event;
-    uint64_t ticks;
     uint64_t time_next_down = 0;
     uint64_t time_next_das = 0;
     uint64_t delay_bot_until = SDL_GetTicks64() + BOT_DELAY_AFTER_SPAWN;
@@ -278,7 +277,7 @@ int32_t main_loop(SDL_Renderer* renderer, graphics_t* graphics,
         return err_value;
     }
     while (!quit) {
-        ticks = SDL_GetTicks64();
+        uint64_t ticks = SDL_GetTicks64();
         while (SDL_PollEvent(&event) != 0) {
             /*
              * SDL_MOUSEMOTION event happens when the application opens while the cursor is inside
@@ -373,7 +372,7 @@ int32_t main_loop(SDL_Renderer* renderer, graphics_t* graphics,
             }
             bot_force_drop = 0;
             check_place_piece = 0;
-            delay_bot_until = ticks + BOT_DELAY_AFTER_SPAWN;
+            delay_bot_until = SDL_GetTicks64() + BOT_DELAY_AFTER_SPAWN;
         }
 
         SDL_RenderClear(renderer);
