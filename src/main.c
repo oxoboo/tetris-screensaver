@@ -49,8 +49,8 @@
 #define TIME_RESET2 500  /* Time while curtian is down. */
 #define TIME_RESET3 1500 /* Time during rising curtain animation. */
 
-#define BOT_DELAY_AFTER_SPAWN    300
-#define BOT_DELAY_AFTER_MOVEMENT 200
+#define BOT_DELAY_AFTER_SPAWN    600
+#define BOT_DELAY_AFTER_MOVEMENT 400
 #define BOT_DELAY_AFTER_ROTATION 200
 
 enum {
