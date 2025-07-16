@@ -46,7 +46,7 @@ enum {
 };
 
 typedef struct {
-    uint8_t*** table; /* table[orientation][row][col] */
+    const void* table;
     uint32_t orientations;
     uint32_t rows;
     uint32_t cols;

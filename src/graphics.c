@@ -312,9 +312,10 @@ void graphics_matrix(graphics_t* graphics, const matrix_t* matrix) {
 }
 
 void graphics_piece(graphics_t* graphics, const piece_t* piece, const matrix_t* matrix) {
+    const uint8_t (*table)[piece->orientations][piece->rows][piece->cols] = (const uint8_t(*)[piece->orientations][piece->rows][piece->cols])piece->table;
     for (size_t r = 0; r < piece->rows; ++r) {
         for (size_t c = 0; c < piece->cols; ++c) {
-            uint8_t type = piece->table[piece->orient_index][r][c];
+            uint8_t type = (*table)[piece->orient_index][r][c];
             if (type == TYPE_NONE || piece->y + r < matrix->hidden_rows) {
                 continue;
             }

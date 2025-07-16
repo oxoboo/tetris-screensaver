@@ -27,205 +27,200 @@
 #include <string.h>
 #include "matrix.h"
 
+enum {
+    LINE_ORIENTS = 2,
+    LINE_ROWS = 4,
+    LINE_COLS = 4,
+    O_ORIENTS = 1,
+    O_ROWS = 4,
+    O_COLS = 4,
+    J_ORIENTS = 4,
+    J_ROWS = 3,
+    J_COLS = 3,
+    L_ORIENTS = 4,
+    L_ROWS = 3,
+    L_COLS = 3,
+    S_ORIENTS = 2,
+    S_ROWS = 3,
+    S_COLS = 3,
+    T_ORIENTS = 4,
+    T_ROWS = 3,
+    T_COLS = 3,
+    Z_ORIENTS = 2,
+    Z_ROWS = 3,
+    Z_COLS = 3,
+};
+
+const uint8_t line_table[LINE_ORIENTS][LINE_ROWS][LINE_COLS] = {
+    {
+        { TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE },
+        { TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE },
+        { TYPE_LINE, TYPE_LINE, TYPE_LINE, TYPE_LINE },
+        { TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE },
+    },
+    {
+        { TYPE_NONE, TYPE_NONE, TYPE_LINE, TYPE_NONE },
+        { TYPE_NONE, TYPE_NONE, TYPE_LINE, TYPE_NONE },
+        { TYPE_NONE, TYPE_NONE, TYPE_LINE, TYPE_NONE },
+        { TYPE_NONE, TYPE_NONE, TYPE_LINE, TYPE_NONE },
+    },
+};
+
+const uint8_t o_table[O_ORIENTS][O_ROWS][O_COLS] = {
+    {
+        { TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE },
+        { TYPE_NONE, TYPE_O, TYPE_O, TYPE_NONE },
+        { TYPE_NONE, TYPE_O, TYPE_O, TYPE_NONE },
+        { TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE },
+    },
+};
+
+const uint8_t j_table[J_ORIENTS][J_ROWS][J_COLS] = {
+    {
+        { TYPE_NONE, TYPE_NONE, TYPE_NONE },
+        { TYPE_J, TYPE_J, TYPE_J },
+        { TYPE_NONE, TYPE_NONE, TYPE_J },
+    },
+    {
+        { TYPE_NONE, TYPE_J, TYPE_NONE },
+        { TYPE_NONE, TYPE_J, TYPE_NONE },
+        { TYPE_J, TYPE_J, TYPE_NONE },
+    },
+    {
+        { TYPE_J, TYPE_NONE, TYPE_NONE },
+        { TYPE_J, TYPE_J, TYPE_J },
+        { TYPE_NONE, TYPE_NONE, TYPE_NONE },
+    },
+    {
+        { TYPE_NONE, TYPE_J, TYPE_J },
+        { TYPE_NONE, TYPE_J, TYPE_NONE },
+        { TYPE_NONE, TYPE_J, TYPE_NONE },
+    },
+};
+
+const uint8_t l_table[L_ORIENTS][L_ROWS][L_COLS] = {
+    {
+        { TYPE_NONE, TYPE_NONE, TYPE_NONE },
+        { TYPE_L, TYPE_L, TYPE_L },
+        { TYPE_L, TYPE_NONE, TYPE_NONE },
+    },
+    {
+        { TYPE_L, TYPE_L, TYPE_NONE },
+        { TYPE_NONE, TYPE_L, TYPE_NONE },
+        { TYPE_NONE, TYPE_L, TYPE_NONE },
+    },
+    {
+        { TYPE_NONE, TYPE_NONE, TYPE_L },
+        { TYPE_L, TYPE_L, TYPE_L },
+        { TYPE_NONE, TYPE_NONE, TYPE_NONE },
+    },
+    {
+        { TYPE_NONE, TYPE_L, TYPE_NONE },
+        { TYPE_NONE, TYPE_L, TYPE_NONE },
+        { TYPE_NONE, TYPE_L, TYPE_L },
+    },
+};
+
+const uint8_t s_table[S_ORIENTS][S_ROWS][S_COLS] = {
+    {
+        { TYPE_NONE, TYPE_NONE, TYPE_NONE },
+        { TYPE_NONE, TYPE_S, TYPE_S },
+        { TYPE_S, TYPE_S, TYPE_NONE },
+    },
+    {
+        { TYPE_NONE, TYPE_S, TYPE_NONE },
+        { TYPE_NONE, TYPE_S, TYPE_S },
+        { TYPE_NONE, TYPE_NONE, TYPE_S },
+    },
+};
+
+const uint8_t t_table[T_ORIENTS][T_ROWS][T_COLS] = {
+    {
+        { TYPE_NONE, TYPE_NONE, TYPE_NONE },
+        { TYPE_T, TYPE_T, TYPE_T },
+        { TYPE_NONE, TYPE_T, TYPE_NONE },
+    },
+    {
+        { TYPE_NONE, TYPE_T, TYPE_NONE },
+        { TYPE_T, TYPE_T, TYPE_NONE },
+        { TYPE_NONE, TYPE_T, TYPE_NONE },
+    },
+    {
+        { TYPE_NONE, TYPE_T, TYPE_NONE },
+        { TYPE_T, TYPE_T, TYPE_T },
+        { TYPE_NONE, TYPE_NONE, TYPE_NONE },
+    },
+    {
+        { TYPE_NONE, TYPE_T, TYPE_NONE },
+        { TYPE_NONE, TYPE_T, TYPE_T },
+        { TYPE_NONE, TYPE_T, TYPE_NONE },
+    },
+};
+
+const uint8_t z_table[Z_ORIENTS][Z_ROWS][Z_COLS] = {
+    {
+        { TYPE_NONE, TYPE_NONE, TYPE_NONE },
+        { TYPE_Z, TYPE_Z, TYPE_NONE },
+        { TYPE_NONE, TYPE_Z, TYPE_Z },
+    },
+    {
+        { TYPE_NONE, TYPE_NONE, TYPE_Z },
+        { TYPE_NONE, TYPE_Z, TYPE_Z },
+        { TYPE_NONE, TYPE_Z, TYPE_NONE },
+    },
+};
+
 piece_t* piece_new(const matrix_t* matrix, uint8_t type) {
-    uint32_t orientations;
-    uint32_t rows;
-    uint32_t cols;
-    switch (type) {
-        case TYPE_LINE:
-            rows = 4;
-            cols = 4;
-            orientations = 2;
-            break;
-        case TYPE_O:
-            rows = 4;
-            cols = 4;
-            orientations = 1;
-            break;
-        case TYPE_J:
-            rows = 3;
-            cols = 3;
-            orientations = 4;
-            break;
-        case TYPE_L:
-            rows = 3;
-            cols = 3;
-            orientations = 4;
-            break;
-        case TYPE_S:
-            rows = 3;
-            cols = 3;
-            orientations = 2;
-            break;
-        case TYPE_T:
-            rows = 3;
-            cols = 3;
-            orientations = 4;
-            break;
-        case TYPE_Z:
-            rows = 3;
-            cols = 3;
-            orientations = 2;
-            break;
-        default:
-            return NULL;
-    }
-
-    uint8_t*** table = malloc(orientations * sizeof(uint8_t**));
-    if (!table) {
-        return NULL;
-    }
-    for (size_t i = 0; i < orientations; ++i) {
-        table[i] = malloc(rows * sizeof(uint8_t*));
-        if (!table[i]) {
-            for (size_t i2 = 0; i2 < i; ++i2) {
-                free(table[i2]);
-            }
-            free(table);
-            return NULL;
-        }
-        for (size_t r = 0; r < rows; ++r) {
-            table[i][r] = malloc(cols * sizeof(uint8_t));
-            if (!table[i][r]) {
-                for (size_t r2 = 0; r2 < r; ++r2) {
-                    free(table[i][r2]);
-                }
-                free(table[i]);
-                for (size_t i2 = 0; i2 < i; ++i2) {
-                    for (size_t r2 = 0; r2 < rows; ++r2) {
-                        free(table[i2][r2]);
-                    }
-                    free(table[i2]);
-                }
-                free(table);
-                return NULL;
-            }
-            for (size_t c = 0; c < cols; ++c) {
-                table[i][r][c] = TYPE_NONE;
-            }
-        }
-    }
-
-    switch (type) {
-        case TYPE_LINE:
-            /* orientation 1 */
-            memset(table[0][2], TYPE_LINE, 4);
-            /* orientation 2 */
-            table[1][0][2] = TYPE_LINE;
-            table[1][1][2] = TYPE_LINE;
-            table[1][2][2] = TYPE_LINE;
-            table[1][3][2] = TYPE_LINE;
-            break;
-        case TYPE_O:
-            /* orientation 1 */
-            table[0][1][1] = TYPE_O;
-            table[0][1][2] = TYPE_O;
-            table[0][2][1] = TYPE_O;
-            table[0][2][2] = TYPE_O;
-            break;
-        case TYPE_J:
-            /* orientation 1 */
-            table[0][1][0] = TYPE_J;
-            table[0][1][1] = TYPE_J;
-            table[0][1][2] = TYPE_J;
-            table[0][2][2] = TYPE_J;
-            /* orientation 2 */
-            table[1][0][1] = TYPE_J;
-            table[1][1][1] = TYPE_J;
-            table[1][2][1] = TYPE_J;
-            table[1][2][0] = TYPE_J;
-            /* orientation 3 */
-            table[2][0][0] = TYPE_J;
-            table[2][1][0] = TYPE_J;
-            table[2][1][1] = TYPE_J;
-            table[2][1][2] = TYPE_J;
-            /* orientation 4 */
-            table[3][0][1] = TYPE_J;
-            table[3][0][2] = TYPE_J;
-            table[3][1][1] = TYPE_J;
-            table[3][2][1] = TYPE_J;
-            break;
-        case TYPE_L:
-            /* orientation 1 */
-            table[0][1][0] = TYPE_L;
-            table[0][1][1] = TYPE_L;
-            table[0][1][2] = TYPE_L;
-            table[0][2][0] = TYPE_L;
-            /* orientation 2 */
-            table[1][0][0] = TYPE_L;
-            table[1][0][1] = TYPE_L;
-            table[1][1][1] = TYPE_L;
-            table[1][2][1] = TYPE_L;
-            /* orientation 3 */
-            table[2][0][2] = TYPE_L;
-            table[2][1][0] = TYPE_L;
-            table[2][1][1] = TYPE_L;
-            table[2][1][2] = TYPE_L;
-            /* orientation 4 */
-            table[3][0][1] = TYPE_L;
-            table[3][1][1] = TYPE_L;
-            table[3][2][1] = TYPE_L;
-            table[3][2][2] = TYPE_L;
-            break;
-        case TYPE_S:
-            /* orientation 1 */
-            table[0][1][1] = TYPE_S;
-            table[0][1][2] = TYPE_S;
-            table[0][2][0] = TYPE_S;
-            table[0][2][1] = TYPE_S;
-            /* orientation 2 */
-            table[1][0][1] = TYPE_S;
-            table[1][1][1] = TYPE_S;
-            table[1][1][2] = TYPE_S;
-            table[1][2][2] = TYPE_S;
-            break;
-        case TYPE_T:
-            /* orientation 1 */
-            table[0][1][0] = TYPE_T;
-            table[0][1][1] = TYPE_T;
-            table[0][1][2] = TYPE_T;
-            table[0][2][1] = TYPE_T;
-            /* orientation 2 */
-            table[1][0][1] = TYPE_T;
-            table[1][1][0] = TYPE_T;
-            table[1][1][1] = TYPE_T;
-            table[1][2][1] = TYPE_T;
-            /* orientation 3 */
-            table[2][0][1] = TYPE_T;
-            table[2][1][0] = TYPE_T;
-            table[2][1][1] = TYPE_T;
-            table[2][1][2] = TYPE_T;
-            /* orientation 4 */
-            table[3][0][1] = TYPE_T;
-            table[3][1][1] = TYPE_T;
-            table[3][1][2] = TYPE_T;
-            table[3][2][1] = TYPE_T;
-            break;
-        case TYPE_Z:
-            /* orientation 1 */
-            table[0][1][0] = TYPE_Z;
-            table[0][1][1] = TYPE_Z;
-            table[0][2][1] = TYPE_Z;
-            table[0][2][2] = TYPE_Z;
-            /* orientation 2 */
-            table[1][0][2] = TYPE_Z;
-            table[1][1][1] = TYPE_Z;
-            table[1][1][2] = TYPE_Z;
-            table[1][2][1] = TYPE_Z;
-            break;
-        default:
-            return NULL;
-
-    }
-
     piece_t* piece = malloc(sizeof(piece_t));
     if (!piece) {
         return NULL;
     }
-    piece->table = table;
-    piece->orientations = orientations;
-    piece->rows = rows;
-    piece->cols = cols;
+    switch (type) {
+        case TYPE_LINE:
+            piece->table = line_table;
+            piece->orientations = LINE_ORIENTS;
+            piece->rows = LINE_ROWS;
+            piece->cols = LINE_COLS;
+            break;
+        case TYPE_O:
+            piece->table = o_table;
+            piece->orientations = O_ORIENTS;
+            piece->rows = O_ROWS;
+            piece->cols = O_COLS;
+            break;
+        case TYPE_J:
+            piece->table = j_table;
+            piece->orientations = J_ORIENTS;
+            piece->rows = J_ROWS;
+            piece->cols = J_COLS;
+            break;
+        case TYPE_L:
+            piece->table = l_table;
+            piece->orientations = L_ORIENTS;
+            piece->rows = L_ROWS;
+            piece->cols = L_COLS;
+            break;
+        case TYPE_S:
+            piece->table = s_table;
+            piece->orientations = S_ORIENTS;
+            piece->rows = S_ROWS;
+            piece->cols = S_COLS;
+            break;
+        case TYPE_T:
+            piece->table = t_table;
+            piece->orientations = T_ORIENTS;
+            piece->rows = T_ROWS;
+            piece->cols = T_COLS;
+            break;
+        case TYPE_Z:
+            piece->table = z_table;
+            piece->orientations = Z_ORIENTS;
+            piece->rows = Z_ROWS;
+            piece->cols = Z_COLS;
+            break;
+        default:
+            return NULL;
+    }
     piece->orient_index = 0;
     piece->x = matrix->cols / 2 - piece->cols / 2;
     piece->y = matrix->hidden_rows - 1;
@@ -243,9 +238,10 @@ piece_t* piece_new_rand(const matrix_t* matrix) {
 
 /* Return whether the piece either collides with the stack or is out of bounds of the matrix. */
 bool piece_collides(const piece_t* piece, const matrix_t* matrix) {
+    const uint8_t (*table)[piece->orientations][piece->rows][piece->cols] = (const uint8_t(*)[piece->orientations][piece->rows][piece->cols])piece->table;
     for (int32_t r = 0; r < (int64_t)piece->rows; ++r) {
         for (int32_t c = 0; c < (int64_t)piece->cols; ++c) {
-            if (piece->table[piece->orient_index][r][c] != TYPE_NONE) {
+            if ((*table)[piece->orient_index][r][c] != TYPE_NONE) {
                 /* check collision with the playfield */
                 if (matrix_out_bounds(matrix, piece->y + r, piece->x + c)) {
                     return true;
@@ -332,9 +328,10 @@ bool piece_rotate_cw(piece_t* piece, const matrix_t* matrix) {
 }
 
 void piece_place(const piece_t* piece, matrix_t* matrix) {
+    const uint8_t (*table)[piece->orientations][piece->rows][piece->cols] = (const uint8_t(*)[piece->orientations][piece->rows][piece->cols])piece->table;
     for (size_t r = 0; r < piece->rows; ++r) {
         for (size_t c = 0; c < piece->cols; ++c) {
-            uint8_t type = piece->table[piece->orient_index][r][c];
+            uint8_t type = (*table)[piece->orient_index][r][c];
             if (type != TYPE_NONE) {
                 /* copy piece to matrix */
                 if (!matrix_out_bounds(matrix, piece->y + r, piece->x + c)) {
@@ -346,22 +343,6 @@ void piece_place(const piece_t* piece, matrix_t* matrix) {
 }
 
 void piece_free(piece_t* piece) {
-    if (!piece) {
-        return;
-    }
-    for (size_t i = 0; i < piece->orientations; ++i) {
-        for (size_t r = 0; r < piece->rows; ++r) {
-            if (piece->table[i][r]) {
-                free(piece->table[i][r]);
-            }
-        }
-        if (piece->table[i]) {
-            free(piece->table[i]);
-        }
-    }
-    if (piece->table) {
-        free(piece->table);
-    }
     free(piece);
 }
 
