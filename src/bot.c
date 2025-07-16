@@ -29,6 +29,14 @@
 #include "bot.h"
 #include "errorvalues.h"
 
+void inputs_clear(inputs_t* inputs) {
+    inputs->left = false;
+    inputs->right = false;
+    inputs->down = false;
+    inputs->ccw = false;
+    inputs->cw = false;
+}
+
 bot_t bot_new(void) {
     return (bot_t) {
         .holes = 0,
@@ -338,10 +346,8 @@ int32_t bot_find_place(bot_t* bot, const matrix_t* matrix, uint8_t piece_type) {
  * Before calling this function, pass `bot` to bot_find_piece for every piece the game spawns,
  * or use bot_next_piece.
  */
-void bot_update_inputs(bot_t* bot, bool inputs[BOT_NUM_INPUTS], const piece_t* piece) {
-    for (size_t i = 0; i < BOT_NUM_INPUTS; ++i) {
-        inputs[i] = 0;
-    }
+void bot_update_inputs(bot_t* bot, inputs_t* inputs, const piece_t* piece) {
+    inputs_clear(inputs);
     int64_t x = piece->orient_index;
     int64_t d = bot->dest_orient_index;
     if (x != d) {
@@ -353,15 +359,15 @@ void bot_update_inputs(bot_t* bot, bool inputs[BOT_NUM_INPUTS], const piece_t* p
             is_cw_optimal = llabs(d - x) >= llabs(x - (n + d));
         }
         if (is_cw_optimal) {
-            inputs[BOT_INPUT_CW] = 1;
+            inputs->cw = true;
         } else {
-            inputs[BOT_INPUT_CCW] = 1;
+            inputs->ccw = true;
         }
     } else if (piece->x < bot->dest_x) {
-        inputs[BOT_INPUT_RIGHT] = 1;
+        inputs->right = true;
     } else if (piece->x > bot->dest_x) {
-        inputs[BOT_INPUT_LEFT] = 1;
+        inputs->left = true;
     } else if (piece->x == bot->dest_x) {
-        inputs[BOT_INPUT_DOWN] = 1;
+        inputs->down = true;
     }
 }

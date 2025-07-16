@@ -259,13 +259,14 @@ void reset_loop2(SDL_Renderer* renderer, graphics_t* graphics, const matrix_t* m
 int32_t main_loop(SDL_Renderer* renderer, graphics_t* graphics,
                   matrix_t* matrix, piece_t** piece, bool debug_mode) {
     bot_t bot = bot_new();
+    inputs_t inputs;
+    inputs_clear(&inputs);
     SDL_Event event;
     uint64_t time_next_down = 0;
     uint64_t time_next_das = 0;
     uint64_t delay_bot_until = SDL_GetTicks64() + BOT_DELAY_AFTER_SPAWN;
     uint32_t lines_cleared = 0;
     uint32_t lines_next_pallete = LINES_PER_PALLETE;
-    bool inputs[NUM_INPUTS] = { 0, 0, 0, 0, 0 };
     bool check_place_piece = false;
     bool ignore_mouse_motion = true;
     bool bot_force_drop = false;
@@ -288,41 +289,39 @@ int32_t main_loop(SDL_Renderer* renderer, graphics_t* graphics,
         }
         ignore_mouse_motion = false;
 
-        bool was_prev_input_move = inputs[BOT_INPUT_LEFT] || inputs[BOT_INPUT_RIGHT];
-        bot_update_inputs(&bot, inputs, *piece);
+        bool was_prev_input_move = inputs.left || inputs.right;
+        bot_update_inputs(&bot, &inputs, *piece);
         /* delay the bot's input before dropping the piece */
-        if (was_prev_input_move && inputs[BOT_INPUT_DOWN]) {
+        if (was_prev_input_move && inputs.down) {
             delay_bot_until = ticks + BOT_DELAY_AFTER_MOVEMENT;
         }
 
         if (ticks > delay_bot_until) {
             if (bot_force_drop) {
-                for (size_t i = 0; i < BOT_NUM_INPUTS; ++i) {
-                    inputs[i] = 0;
-                }
-                inputs[BOT_INPUT_DOWN] = 1;
+                inputs_clear(&inputs);
+                inputs.down = true;
             }
-            if (inputs[BOT_INPUT_CCW]) {
+            if (inputs.ccw) {
                 bot_force_drop = !piece_rotate_ccw(*piece, matrix);
                 delay_bot_until = ticks + BOT_DELAY_AFTER_ROTATION;
             }
-            if (inputs[BOT_INPUT_CW]) {
+            if (inputs.cw) {
                 bot_force_drop = !piece_rotate_cw(*piece, matrix);
                 delay_bot_until = ticks + BOT_DELAY_AFTER_ROTATION;
             }
-            if (inputs[BOT_INPUT_LEFT]) {
+            if (inputs.left) {
                 if (ticks > time_next_das) {
                     bot_force_drop = !piece_move_left(*piece, matrix);
                     time_next_das = ticks + TIME_ARR;
                 }
             }
-            if (inputs[BOT_INPUT_RIGHT]) {
+            if (inputs.right) {
                 if (ticks > time_next_das) {
                     bot_force_drop = !piece_move_right(*piece, matrix);
                     time_next_das = ticks + TIME_ARR;
                 }
             }
-            if (inputs[BOT_INPUT_DOWN]) {
+            if (inputs.down) {
                 if (ticks > time_next_down) {
                     check_place_piece = !piece_move_down(*piece, matrix);
                     time_next_down = ticks + TIME_DROP;

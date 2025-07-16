@@ -24,17 +24,18 @@
 
 #if !defined(BOT_H)
 
+#include <stdbool.h>
 #include "matrix.h"
 
-#define BOT_NUM_INPUTS 5
+typedef struct {
+    bool left;
+    bool right;
+    bool down;
+    bool ccw;
+    bool cw;
+} inputs_t;
 
-enum {
-    BOT_INPUT_LEFT,
-    BOT_INPUT_RIGHT,
-    BOT_INPUT_DOWN,
-    BOT_INPUT_CCW, /* counter-clockwise */
-    BOT_INPUT_CW, /* clockwise */
-};
+void inputs_clear(inputs_t* inputs);
 
 typedef struct {
     uint32_t holes;
@@ -47,6 +48,6 @@ typedef struct {
 bot_t    bot_new(void);
 piece_t* bot_next_piece(bot_t* bot, const matrix_t* matrix, int32_t* err_value);
 int32_t  bot_find_place(bot_t* bot, const matrix_t* matrix, uint8_t piece_type);
-void     bot_update_inputs(bot_t* bot, bool inputs[BOT_NUM_INPUTS], const piece_t* piece);
+void     bot_update_inputs(bot_t* bot, inputs_t* inputs, const piece_t* piece);
 
 #endif /* BOT_H */
