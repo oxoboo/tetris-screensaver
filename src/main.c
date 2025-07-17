@@ -30,27 +30,34 @@
 #include "bot.h"
 #include "errorvalues.h"
 
-#define WINDOW_TITLE "NES Tetris Screensaver"
-#define SCREEN_DEFAULT_WIDTH  1280
-#define SCREEN_DEFAULT_HEIGHT 720
+enum {
+    SCREEN_DEFAULT_WIDTH = 1280,
+    SCREEN_DEFAULT_HEIGHT = 720,
+};
 
-#define LINES_CLEARED_TETRIS 4
-#define LINES_PER_PALLETE    10
+enum {
+    LINES_CLEARED_TETRIS = 4,
+    LINES_PER_PALLETE = 10,
+};
 
 /* values are in milliseconds */
-#define TIME_DAS    267
-#define TIME_ARR    100
-#define TIME_ARE    167
-#define TIME_DROP   32
-#define TIME_CLEAR  300
-#define TIME_RESET0 1500 /* Time before falling curtain animation. */
-#define TIME_RESET1 1500 /* Time during falling curtain animation. */
-#define TIME_RESET2 500  /* Time while curtian is down. */
-#define TIME_RESET3 1500 /* Time during rising curtain animation. */
+enum {
+    TIME_DAS = 267,
+    TIME_ARR = 100,
+    TIME_ARE = 167,
+    TIME_DROP = 32,
+    TIME_CLEAR = 300,
+    TIME_RESET0 = 1500, /* Time before falling curtain animation. */
+    TIME_RESET1 = 1500, /* Time during falling curtain animation. */
+    TIME_RESET2 = 500, /* Time while curtian is down. */
+    TIME_RESET3 = 1500, /* Time during rising curtain animation. */
+};
 
-#define BOT_DELAY_AFTER_SPAWN    600
-#define BOT_DELAY_AFTER_MOVEMENT 400
-#define BOT_DELAY_AFTER_ROTATION 200
+enum {
+    BOT_DELAY_AFTER_SPAWN = 600,
+    BOT_DELAY_AFTER_MOVEMENT = 400,
+    BOT_DELAY_AFTER_ROTATION = 200,
+};
 
 /*
  * Initiate the SDL library, set up the game, and call srand. Return 0 on success or a non-zero
@@ -62,7 +69,7 @@ int32_t init(SDL_Window** window, uint32_t win_flags,
         return ERROR_SDL_INIT;
     }
     *window = SDL_CreateWindow(
-        WINDOW_TITLE,
+        "NES Tetris Screensaver",
         SDL_WINDOWPOS_UNDEFINED,
         SDL_WINDOWPOS_UNDEFINED,
         SCREEN_DEFAULT_WIDTH,

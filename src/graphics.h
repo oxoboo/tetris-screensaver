@@ -27,9 +27,11 @@
 #include "SDL_render.h"
 #include "matrix.h"
 
-#define FLASH_GRAY   0x3F
-#define FLASH_STATES 10
-#define REND_GRAY    0x17
+enum {
+    FLASH_GRAY = 0x3F,
+    FLASH_STATES = 10,
+    REND_GRAY = 0x17,
+};
 
 typedef struct {
     SDL_Texture* texture;

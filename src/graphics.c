@@ -26,14 +26,18 @@
 #include <string.h>
 #include "graphics.h"
 
-#define BLOCK_WIDTH  8
-#define BLOCK_HEIGHT 8
-#define NUM_PALLETES 10
+enum {
+    BLOCK_WIDTH = 8,
+    BLOCK_HEIGHT = 8,
+    NUM_PALLETES = 10,
+};
 
-#define PIXEL_FORMAT    SDL_PIXELFORMAT_RGBA8888
-#define DEFAULT_ALPHA   0xBF
-#define BG_GRAY         0x00
-#define BYTES_PER_PIXEL 4
+enum {
+    PIXEL_FORMAT = SDL_PIXELFORMAT_RGBA8888,
+    DEFAULT_ALPHA = 0xBF,
+    BG_GRAY = 0x00,
+    BYTES_PER_PIXEL = 4,
+};
 
 enum color_index {
     INDEX_RED,

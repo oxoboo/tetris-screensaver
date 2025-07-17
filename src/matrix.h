@@ -28,11 +28,12 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define NUM_PIECES 7
-
-#define MATRIX_ROWS        22
-#define MATRIX_COLS        10
-#define MATRIX_HIDDEN_ROWS 2
+enum {
+    NUM_PIECES = 7,
+    MATRIX_ROWS = 22,
+    MATRIX_COLS = 10,
+    MATRIX_HIDDEN_ROWS = 2,
+};
 
 enum {
     TYPE_NONE,
