@@ -34,7 +34,6 @@
 #define SCREEN_DEFAULT_WIDTH  1280
 #define SCREEN_DEFAULT_HEIGHT 720
 
-#define NUM_INPUTS           5
 #define LINES_CLEARED_TETRIS 4
 #define LINES_PER_PALLETE    10
 
@@ -52,14 +51,6 @@
 #define BOT_DELAY_AFTER_SPAWN    600
 #define BOT_DELAY_AFTER_MOVEMENT 400
 #define BOT_DELAY_AFTER_ROTATION 200
-
-enum {
-    PLAYER_INPUT_LEFT,
-    PLAYER_INPUT_RIGHT,
-    PLAYER_INPUT_DOWN,
-    PLAYER_INPUT_CCW, /* counter-clockwise */
-    PLAYER_INPUT_CW, /* clockwise */
-};
 
 /*
  * Initiate the SDL library, set up the game, and call srand. Return 0 on success or a non-zero
