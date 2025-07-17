@@ -217,7 +217,7 @@ piece_t* bot_next_piece(bot_t* bot, const matrix_t* matrix, int32_t* err_value) 
     uint8_t type = rand() % NUM_PIECES + 1; /* default value */
     for (size_t i = 0; i < NUM_PIECES; ++i) {
         tmp_err_value = bot_find_place(bot, matrix, bag_randomized[i]);
-        if (tmp_err_value < 0) {
+        if (tmp_err_value != 0) {
             *err_value = tmp_err_value;
             return NULL;
         }

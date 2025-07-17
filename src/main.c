@@ -272,7 +272,7 @@ int32_t main_loop(SDL_Renderer* renderer, graphics_t* graphics,
 
     int32_t err_value = 0;
     *piece = bot_next_piece(&bot, matrix, &err_value);
-    if (err_value < 0) {
+    if (err_value != 0) {
         return err_value;
     }
     while (!quit) {
