@@ -51,7 +51,7 @@ enum {
     Z_COLS = 3,
 };
 
-const uint8_t line_table[LINE_ORIENTS][LINE_ROWS][LINE_COLS] = {
+const uint8_t LINE_TABLE[LINE_ORIENTS][LINE_ROWS][LINE_COLS] = {
     {
         { TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE },
         { TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE },
@@ -66,7 +66,7 @@ const uint8_t line_table[LINE_ORIENTS][LINE_ROWS][LINE_COLS] = {
     },
 };
 
-const uint8_t o_table[O_ORIENTS][O_ROWS][O_COLS] = {
+const uint8_t O_TABLE[O_ORIENTS][O_ROWS][O_COLS] = {
     {
         { TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE },
         { TYPE_NONE, TYPE_O, TYPE_O, TYPE_NONE },
@@ -75,7 +75,7 @@ const uint8_t o_table[O_ORIENTS][O_ROWS][O_COLS] = {
     },
 };
 
-const uint8_t j_table[J_ORIENTS][J_ROWS][J_COLS] = {
+const uint8_t J_TABLE[J_ORIENTS][J_ROWS][J_COLS] = {
     {
         { TYPE_NONE, TYPE_NONE, TYPE_NONE },
         { TYPE_J, TYPE_J, TYPE_J },
@@ -98,7 +98,7 @@ const uint8_t j_table[J_ORIENTS][J_ROWS][J_COLS] = {
     },
 };
 
-const uint8_t l_table[L_ORIENTS][L_ROWS][L_COLS] = {
+const uint8_t L_TABLE[L_ORIENTS][L_ROWS][L_COLS] = {
     {
         { TYPE_NONE, TYPE_NONE, TYPE_NONE },
         { TYPE_L, TYPE_L, TYPE_L },
@@ -121,7 +121,7 @@ const uint8_t l_table[L_ORIENTS][L_ROWS][L_COLS] = {
     },
 };
 
-const uint8_t s_table[S_ORIENTS][S_ROWS][S_COLS] = {
+const uint8_t S_TABLE[S_ORIENTS][S_ROWS][S_COLS] = {
     {
         { TYPE_NONE, TYPE_NONE, TYPE_NONE },
         { TYPE_NONE, TYPE_S, TYPE_S },
@@ -134,7 +134,7 @@ const uint8_t s_table[S_ORIENTS][S_ROWS][S_COLS] = {
     },
 };
 
-const uint8_t t_table[T_ORIENTS][T_ROWS][T_COLS] = {
+const uint8_t T_TABLE[T_ORIENTS][T_ROWS][T_COLS] = {
     {
         { TYPE_NONE, TYPE_NONE, TYPE_NONE },
         { TYPE_T, TYPE_T, TYPE_T },
@@ -157,7 +157,7 @@ const uint8_t t_table[T_ORIENTS][T_ROWS][T_COLS] = {
     },
 };
 
-const uint8_t z_table[Z_ORIENTS][Z_ROWS][Z_COLS] = {
+const uint8_t Z_TABLE[Z_ORIENTS][Z_ROWS][Z_COLS] = {
     {
         { TYPE_NONE, TYPE_NONE, TYPE_NONE },
         { TYPE_Z, TYPE_Z, TYPE_NONE },
@@ -177,43 +177,43 @@ piece_t* piece_new(const matrix_t* matrix, uint8_t type) {
     }
     switch (type) {
         case TYPE_LINE:
-            piece->table = line_table;
+            piece->table = LINE_TABLE;
             piece->orientations = LINE_ORIENTS;
             piece->rows = LINE_ROWS;
             piece->cols = LINE_COLS;
             break;
         case TYPE_O:
-            piece->table = o_table;
+            piece->table = O_TABLE;
             piece->orientations = O_ORIENTS;
             piece->rows = O_ROWS;
             piece->cols = O_COLS;
             break;
         case TYPE_J:
-            piece->table = j_table;
+            piece->table = J_TABLE;
             piece->orientations = J_ORIENTS;
             piece->rows = J_ROWS;
             piece->cols = J_COLS;
             break;
         case TYPE_L:
-            piece->table = l_table;
+            piece->table = L_TABLE;
             piece->orientations = L_ORIENTS;
             piece->rows = L_ROWS;
             piece->cols = L_COLS;
             break;
         case TYPE_S:
-            piece->table = s_table;
+            piece->table = S_TABLE;
             piece->orientations = S_ORIENTS;
             piece->rows = S_ROWS;
             piece->cols = S_COLS;
             break;
         case TYPE_T:
-            piece->table = t_table;
+            piece->table = T_TABLE;
             piece->orientations = T_ORIENTS;
             piece->rows = T_ROWS;
             piece->cols = T_COLS;
             break;
         case TYPE_Z:
-            piece->table = z_table;
+            piece->table = Z_TABLE;
             piece->orientations = Z_ORIENTS;
             piece->rows = Z_ROWS;
             piece->cols = Z_COLS;

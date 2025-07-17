@@ -57,7 +57,7 @@ typedef struct {
     uint8_t color2[3];
 } pallete_t;
 
-const pallete_t pallete[NUM_PALLETES] = {
+const pallete_t PALLETE[NUM_PALLETES] = {
     { .color1 = { 0x00, 0x58, 0xF8 }, .color2 = { 0x3C, 0xBC, 0xFC } },
     { .color1 = { 0x00, 0xA8, 0x00 }, .color2 = { 0xB8, 0xF8, 0x18 } },
     { .color1 = { 0xD8, 0x00, 0xCC }, .color2 = { 0xF8, 0x78, 0xF8 } },
@@ -70,7 +70,7 @@ const pallete_t pallete[NUM_PALLETES] = {
     { .color1 = { 0xF8, 0x38, 0x00 }, .color2 = { 0xFC, 0xA0, 0x44 } },
 };
 
-const uint8_t pixels_block1[BLOCK_HEIGHT][BLOCK_WIDTH] = {
+const uint8_t PIXELS_BLOCK1[BLOCK_HEIGHT][BLOCK_WIDTH] = {
     { COLOR_W, COLOR_1, COLOR_1, COLOR_1, COLOR_1, COLOR_1, COLOR_1, COLOR_B },
     { COLOR_1, COLOR_W, COLOR_W, COLOR_W, COLOR_W, COLOR_W, COLOR_1, COLOR_B },
     { COLOR_1, COLOR_W, COLOR_W, COLOR_W, COLOR_W, COLOR_W, COLOR_1, COLOR_B },
@@ -81,7 +81,7 @@ const uint8_t pixels_block1[BLOCK_HEIGHT][BLOCK_WIDTH] = {
     { COLOR_B, COLOR_B, COLOR_B, COLOR_B, COLOR_B, COLOR_B, COLOR_B, COLOR_B },
 };
 
-const uint8_t pixels_block2[BLOCK_HEIGHT][BLOCK_WIDTH] = {
+const uint8_t PIXELS_BLOCK2[BLOCK_HEIGHT][BLOCK_WIDTH] = {
     { COLOR_W, COLOR_2, COLOR_2, COLOR_2, COLOR_2, COLOR_2, COLOR_2, COLOR_B },
     { COLOR_2, COLOR_W, COLOR_W, COLOR_2, COLOR_2, COLOR_2, COLOR_2, COLOR_B },
     { COLOR_2, COLOR_W, COLOR_2, COLOR_2, COLOR_2, COLOR_2, COLOR_2, COLOR_B },
@@ -92,7 +92,7 @@ const uint8_t pixels_block2[BLOCK_HEIGHT][BLOCK_WIDTH] = {
     { COLOR_B, COLOR_B, COLOR_B, COLOR_B, COLOR_B, COLOR_B, COLOR_B, COLOR_B },
 };
 
-const uint8_t pixels_block3[BLOCK_HEIGHT][BLOCK_WIDTH] = {
+const uint8_t PIXELS_BLOCK3[BLOCK_HEIGHT][BLOCK_WIDTH] = {
     { COLOR_W, COLOR_1, COLOR_1, COLOR_1, COLOR_1, COLOR_1, COLOR_1, COLOR_B },
     { COLOR_1, COLOR_W, COLOR_W, COLOR_1, COLOR_1, COLOR_1, COLOR_1, COLOR_B },
     { COLOR_1, COLOR_W, COLOR_1, COLOR_1, COLOR_1, COLOR_1, COLOR_1, COLOR_B },
@@ -103,7 +103,7 @@ const uint8_t pixels_block3[BLOCK_HEIGHT][BLOCK_WIDTH] = {
     { COLOR_B, COLOR_B, COLOR_B, COLOR_B, COLOR_B, COLOR_B, COLOR_B, COLOR_B },
 };
 
-const uint8_t colors_curtain[BLOCK_HEIGHT][BLOCK_WIDTH] = {
+const uint8_t COLORS_CURTAIN[BLOCK_HEIGHT][BLOCK_WIDTH] = {
     { COLOR_2, COLOR_2, COLOR_2, COLOR_2, COLOR_2, COLOR_2, COLOR_2, COLOR_2 },
     { COLOR_2, COLOR_2, COLOR_2, COLOR_2, COLOR_2, COLOR_2, COLOR_2, COLOR_2 },
     { COLOR_W, COLOR_W, COLOR_W, COLOR_W, COLOR_W, COLOR_W, COLOR_W, COLOR_W },
@@ -186,16 +186,16 @@ void graphics_cell(graphics_t* graphics, const matrix_t* matrix,
     const uint8_t (*pixels)[BLOCK_HEIGHT][BLOCK_WIDTH];
     switch (type_to_nes_type(type)) {
         case 0:
-            pixels = &pixels_block1;
+            pixels = &PIXELS_BLOCK1;
             break;
         case 1:
-            pixels = &pixels_block2;
+            pixels = &PIXELS_BLOCK2;
             break;
         case 2:
-            pixels = &pixels_block3;
+            pixels = &PIXELS_BLOCK3;
             break;
         default:
-            pixels = &pixels_block1;
+            pixels = &PIXELS_BLOCK1;
             break;
     }
 
@@ -209,15 +209,15 @@ void graphics_cell(graphics_t* graphics, const matrix_t* matrix,
             switch ((*pixels)[y][x]) {
                 case COLOR_1:
                     graphics->pixels[index] = DEFAULT_ALPHA;
-                    graphics->pixels[index + 1] = pallete[p_index].color1[INDEX_BLUE];
-                    graphics->pixels[index + 2] = pallete[p_index].color1[INDEX_GREEN];
-                    graphics->pixels[index + 3] = pallete[p_index].color1[INDEX_RED];
+                    graphics->pixels[index + 1] = PALLETE[p_index].color1[INDEX_BLUE];
+                    graphics->pixels[index + 2] = PALLETE[p_index].color1[INDEX_GREEN];
+                    graphics->pixels[index + 3] = PALLETE[p_index].color1[INDEX_RED];
                     break;
                 case COLOR_2:
                     graphics->pixels[index] = DEFAULT_ALPHA;
-                    graphics->pixels[index + 1] = pallete[p_index].color2[INDEX_BLUE];
-                    graphics->pixels[index + 2] = pallete[p_index].color2[INDEX_GREEN];
-                    graphics->pixels[index + 3] = pallete[p_index].color2[INDEX_RED];
+                    graphics->pixels[index + 1] = PALLETE[p_index].color2[INDEX_BLUE];
+                    graphics->pixels[index + 2] = PALLETE[p_index].color2[INDEX_GREEN];
+                    graphics->pixels[index + 3] = PALLETE[p_index].color2[INDEX_RED];
                     break;
                 case COLOR_W:
                     graphics->pixels[index] = DEFAULT_ALPHA;
@@ -248,18 +248,18 @@ void graphics_curtain(graphics_t* graphics, const matrix_t* matrix, uint32_t row
                     + (col * BLOCK_WIDTH)
                     + (matrix->cols * BLOCK_WIDTH * y) + x)
                     * BYTES_PER_PIXEL;
-                switch (colors_curtain[y][x]) {
+                switch (COLORS_CURTAIN[y][x]) {
                     case COLOR_1:
                         graphics->pixels[index] = DEFAULT_ALPHA;
-                        graphics->pixels[index + 1] = pallete[p_index].color1[INDEX_BLUE];
-                        graphics->pixels[index + 2] = pallete[p_index].color1[INDEX_GREEN];
-                        graphics->pixels[index + 3] = pallete[p_index].color1[INDEX_RED];
+                        graphics->pixels[index + 1] = PALLETE[p_index].color1[INDEX_BLUE];
+                        graphics->pixels[index + 2] = PALLETE[p_index].color1[INDEX_GREEN];
+                        graphics->pixels[index + 3] = PALLETE[p_index].color1[INDEX_RED];
                         break;
                     case COLOR_2:
                         graphics->pixels[index] = DEFAULT_ALPHA;
-                        graphics->pixels[index + 1] = pallete[p_index].color2[INDEX_BLUE];
-                        graphics->pixels[index + 2] = pallete[p_index].color2[INDEX_GREEN];
-                        graphics->pixels[index + 3] = pallete[p_index].color2[INDEX_RED];
+                        graphics->pixels[index + 1] = PALLETE[p_index].color2[INDEX_BLUE];
+                        graphics->pixels[index + 2] = PALLETE[p_index].color2[INDEX_GREEN];
+                        graphics->pixels[index + 3] = PALLETE[p_index].color2[INDEX_RED];
                         break;
                     case COLOR_W:
                         graphics->pixels[index] = DEFAULT_ALPHA;
